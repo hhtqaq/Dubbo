@@ -1,4 +1,4 @@
-package com.irissz.hht.dubbo.main;
+package com.irissz.hht.dubbo.test;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
