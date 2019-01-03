@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+      http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.3.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+       
+	<context:component-scan base-package="com.irissz.hht.dubbo" />
+    <!-- 1 提供方应用信息，用于计算依赖关系不要和别的服务同名即可 -->
+    <dubbo:application name="user-service-provider"  />
+    <!-- 2 使用zookeeper注册中心暴露服务地址 -->
+    <dubbo:registry protocol="zookeeper" address="127.0.0.1:2181" />
+ 	<!-- 但是在这里我们只是把服务注册到了注册中心，但是消费者并不知道，所以我们还需要进行通讯 -->
+ 	<!-- 接下来配置用什么协议 那个端口进行通讯 -->
+ 	<!-- 3 指定通信规则（通信协议，通信端口） -->
+    <!-- 用dubbo协议在20880端口暴露服务 -->
+    <dubbo:protocol name="dubbo" port="20880" />
+    <!--4 声明需要暴露的服务接口  ref指向真的的服务实现-->
+    <dubbo:service interface="com.irissz.hht.dubbo.person.service.PersonService" ref="personServiceImpl" />
+<!--     <bean id="personServiceImpl" class="com.irissz.hht.dubbo.person.serviceImpl.PersonServiceImpl"></bean>
+ -->    
+</beans>
